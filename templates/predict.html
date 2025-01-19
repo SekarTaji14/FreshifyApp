@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <h1>Freshify</h1>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/predict">Predict</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Prediction Container -->
+    <div class="predict-container">
+        <div class="predict-box">
+            <h1>Fresh or Rotten?</h1>
+            <form action="/predict" method="POST" enctype="multipart/form-data">
+                <input type="file" name="foto" required>
+                <button type="submit">Upload and Predict</button>
+            </form>
+
+            {% if prediction %}
+            <h2>{{ prediction }}</h2>
+            <img src="{{ image_path }}" alt="Uploaded Image">
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

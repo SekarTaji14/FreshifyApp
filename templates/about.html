@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <h1>Freshify</h1>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/predict">Predict</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- About Section -->
+    <div class="about-container">
+     <h1>About Project</h1>
+        <!-- Project Overview -->
+        <div class="section-box1">
+            <h2>Project Overview</h2>
+            <p>
+                Freshify is an AI-powered system designed to classify fruits as fresh or rotten.
+                This project aims to assist farmers in making quick and informed decisions regarding their produce quality.
+            </p>
+        </div>
+
+        <!-- Key Problem -->
+        <div class="section-box2">
+            <h2>Key Problems</h2>
+            <p>
+                <li>Prevents undetected hazardous gas leaks that could lead to fires, explosions, or poisoning.</li>
+                <li>Enables real-time tracking of gas levels even when users are not on-site.</li>
+                <li>Reduces risks by triggering safety measures (e.g., alarms, exhaust fans) automatically upon detecting dangerous gas levels.                </li>
+            </p>
+        </div>
+
+        <!-- Dataset Attributes -->
+        <div class="section-box4">
+            <h2>Dataset Attributes</h2>
+            <p>
+                The dataset contains images of six classes: Fresh Apple, Fresh Banana, Fresh Orange, Rotten Apple, Rotten Banana, and Rotten Orange.
+                Each image is labeled and preprocessed for training the model.
+            </p>
+        </div>
+
+        <!-- Model Configuration -->
+        <div class="section-box5">
+            <h2>Model Configuration</h2>
+            <p>
+                The model is built using TensorFlow and Keras. It consists of convolutional layers for feature extraction,
+                pooling layers for dimensionality reduction, and dense layers for classification.
+            </p>
+        </div>
+
+        <!-- Performance Matrix -->
+        <div class="section-box6">
+            <h2>Performance Matrix</h2>
+                <ul>
+                    <li>Accuracy: 95%</li>
+                    <li>Precision: 94%</li>
+                    <li>Recall: 93%</li>
+                    <li>F1 Score: 93.5%</li>
+                </ul>
+        </div>
+    </div>
+</body>
+</html>
