@@ -1,0 +1,11 @@
+[packages]
+flask = "==2.0.3"
+werkzeug = "==2.0.3"
+tflite-runtime = "==2.10.0"
+numpy = "==1.19.5"
+pillow = "==8.4.0"  # Untuk pemrosesan gambar
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

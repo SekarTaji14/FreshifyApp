@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
-import tensorflow as tf
 import numpy as np
+from tflite_runtime.interpreter import Interpreter  # Import tflite-runtime
 
 app = Flask(__name__)
 
@@ -13,21 +13,26 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Muat model TensorFlow
-MODEL_PATH = './model/model_fruits_classification.h5'
+# Muat model TFLite
+MODEL_PATH = './model/model_fruits_classification.tflite'
 
 try:
-    model = tf.keras.models.load_model(MODEL_PATH)
+    interpreter = Interpreter(model_path=MODEL_PATH)
+    interpreter.allocate_tensors()
+
+    # Ambil indeks input dan output
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
 except Exception as e:
-    raise FileNotFoundError(f"Model file not found or failed to load: {MODEL_PATH}. Error: {str(e)}")
+    raise FileNotFoundError(f"TFLite model file not found or failed to load: {MODEL_PATH}. Error: {str(e)}")
 
 # Fungsi untuk memuat dan memproses gambar
 def process_image(image_path):
     try:
-        img = tf.keras.utils.load_img(image_path, target_size=(200, 200))  # Sesuaikan ukuran dengan model Anda
-        img_array = tf.keras.utils.img_to_array(img)
+        from PIL import Image
+        img = Image.open(image_path).resize((200, 200))  # Sesuaikan ukuran dengan model Anda
+        img_array = np.asarray(img).astype('float32') / 255.0  # Normalisasi jika diperlukan
         img_array = np.expand_dims(img_array, axis=0)
-        img_array /= 255.0  # Normalisasi jika model Anda memerlukan input yang dinormalisasi
         return img_array
     except Exception as e:
         raise ValueError(f"Failed to process image at path: {image_path}. Error: {str(e)}")
@@ -57,7 +62,9 @@ def predict():
         # Proses gambar dan prediksi
         try:
             img_array = process_image(image_path)
-            prediction = model.predict(img_array)
+            interpreter.set_tensor(input_details[0]['index'], img_array)
+            interpreter.invoke()
+            prediction = interpreter.get_tensor(output_details[0]['index'])
         except Exception as e:
             return f"Failed to process image for prediction. Error: {str(e)}", 500
 
